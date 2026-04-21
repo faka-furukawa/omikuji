@@ -2,34 +2,11 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>おみくじ結果</title>
-    <style>
-        body { text-align: center; font-family: sans-serif; padding-top: 50px; }
-        #fortune { font-size: 3rem; font-weight: bold; color: #e74c3c; }
-    </style>
+    <title>新入生おみくじ</title>
 </head>
 <body>
-    <h1>あなたの運勢は...</h1>
-    <div id="fortune">引いています...</div>
-    <p id="message"></p>
-    <button onclick="location.href='index.html'">戻る</button>
-
-    <script>
-        const results = [
-            { rank: "大吉", msg: "最高の大学生活が待っています！" },
-            { rank: "吉", msg: "新しい友達がたくさんできるでしょう。" },
-            { rank: "中吉", msg: "学食のカレーが美味しい日です。" },
-            { rank: "小吉", msg: "落とし物に注意。でも良い出会いがあるかも。" }
-        ];
-
-        // ページ読み込み時に実行
-        window.onload = function() {
-            const random = Math.floor(Math.random() * results.length);
-            const selected = results[random];
-            
-            document.getElementById('fortune').innerText = selected.rank;
-            document.getElementById('message').innerText = selected.msg;
-        };
-    </script>
+    <h1>ようこそ！新入生おみくじ</h1>
+    <p>下のQRコードを読み取って運勢を占おう！</p>
+    <img src="qr-code.png" alt="おみくじQRコード" width="200">
 </body>
 </html>
