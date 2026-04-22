@@ -2,40 +2,47 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>新入生おみくじ</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新入生歓迎おみくじ</title>
     <style>
         body {
-            background: linear-gradient(135deg, #fff5f5 0%, #f0fff4 100%);
-            min-height: 100vh;
+            margin: 0;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
             color: #333;
         }
-
-        #fortune {
-            font-size: 4rem;
-            margin: 20px 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        .container {
+            text-align: center;
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
-
-        button {
-            background-color: #ff4757;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 25px;
-            font-size: 1rem;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+        h1 { font-size: 2.5rem; margin-bottom: 10px; color: #d63031; }
+        p { font-size: 1.2rem; color: #636e72; }
+        .qr-wrapper {
+            margin: 30px 0;
+            padding: 20px;
+            border: 2px dashed #fab1a0;
+            display: inline-block;
+        }
+        .qr-wrapper img {
+            width: 300px; /* PCで見やすいサイズ */
+            height: 300px;
         }
     </style>
 </head>
 <body>
-    <h1>ようこそ！新入生おみくじ</h1>
-    <p>下のQRコードを読み取って運勢を占おう！</p>
-    <img src="qr-code.png" alt="おみくじQRコード" width="200">
+    <div class="container">
+        <h1>🌸 新入生歓迎おみくじ 🌸</h1>
+        <p>スマホでQRコードを読み取って、今日の運勢を占おう！</p>
+        <div class="qr-wrapper">
+            <img src="qr-code.png" alt="おみくじを引く">
+        </div>
+        <p>↑ カメラをかざしてね ↑</p>
+    </div>
 </body>
 </html>

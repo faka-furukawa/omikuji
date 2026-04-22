@@ -2,50 +2,89 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>おみくじ結果</title>
     <style>
-        body { text-align: center; font-family: sans-serif; padding-top: 50px; }
-        #fortune { font-size: 3rem; font-weight: bold; color: #e74c3c; }
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #fff5f5;
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+        .card {
+            background: white;
+            width: 90%;
+            max-width: 350px;
+            padding: 40px 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        #fortune {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #d63031;
+            margin: 20px 0;
+            transition: transform 0.3s;
+        }
+        #message {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #2d3436;
+            margin-bottom: 30px;
+        }
+        button {
+            background: #0984e3;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(9, 132, 227, 0.3);
+        }
     </style>
 </head>
 <body>
-    <h1>あなたの運勢は...</h1>
-    <div id="fortune">引いています...</div>
-    <p id="message"></p>
-    <button onclick="location.href='index.html'">戻る</button>
+    <div class="card">
+        <h1>あなたの運勢は…</h1>
+        <div id="fortune">???</div>
+        <p id="message">読み込み中...</p>
+        <button onclick="location.href='index.html'">もう一度引く</button>
+    </div>
 
     <script>
         window.onload = function() {
-            const fortuneElement = document.getElementById('fortune');
-            const messageElement = document.getElementById('message');
-            
-            // 1. シャッフル演出（0.1秒ごとに運勢を書き換える）
+            const results = [
+                { rank: "大吉", msg: "素晴らしい！大学生活最高のスタートが切れるでしょう。" },
+                { rank: "中吉", msg: "新しい友達ができる予感。自分から挨拶してみて！" },
+                { rank: "小吉", msg: "学食でラッキーなことがあるかも。" },
+                { rank: "吉", msg: "落とし物に注意。でも素敵な先輩に出会えるかも。" }
+            ];
+
+            const fortuneEl = document.getElementById('fortune');
+            const messageEl = document.getElementById('message');
+
+            // 簡易的な演出
             let count = 0;
-            const shuffle = setInterval(() => {
-                const dummy = ["大吉", "中吉", "小吉", "吉"];
-                fortuneElement.innerText = dummy[count % dummy.length];
+            const timer = setInterval(() => {
+                const ranks = ["大吉", "中吉", "小吉", "吉"];
+                fortuneEl.innerText = ranks[count % 4];
                 count++;
             }, 100);
 
-            // 2. 2秒後に確定させる
             setTimeout(() => {
-                clearInterval(shuffle); // シャッフル停止
-                
-                const results = [
-                    { rank: "🌸 超大吉", msg: "履修登録が完璧に終わる予感！" },
-                    { rank: "✨ 大吉", msg: "サークル勧誘で運命の出会いがあるかも。" },
-                    { rank: "🍚 学食吉", msg: "限定メニューが食べられる幸運の持ち主。" },
-                    { rank: "📚 知吉", msg: "図書館の奥の方に、あなただけの特等席が見つかる。" }
-                ];
-
-                const selected = results[Math.floor(Math.random() * results.length)];
-                fortuneElement.innerText = selected.rank;
-                messageElement.innerText = selected.msg;
-                
-                // 決まった瞬間に少し大きくする演出
-                fortuneElement.style.transform = "scale(1.2)";
-                fortuneElement.style.transition = "0.3s";
-            }, 2000); // 2000ミリ秒（2秒）待つ
+                clearInterval(timer);
+                const res = results[Math.floor(Math.random() * results.length)];
+                fortuneEl.innerText = res.rank;
+                messageEl.innerText = res.msg;
+                fortuneEl.style.transform = "scale(1.2)";
+            }, 1500);
         };
     </script>
 </body>
