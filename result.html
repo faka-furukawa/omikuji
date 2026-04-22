@@ -15,20 +15,37 @@
     <button onclick="location.href='index.html'">戻る</button>
 
     <script>
-        const results = [
-            { rank: "大吉", msg: "最高の大学生活が待っています！" },
-            { rank: "吉", msg: "新しい友達がたくさんできるでしょう。" },
-            { rank: "中吉", msg: "学食のカレーが美味しい日です。" },
-            { rank: "小吉", msg: "落とし物に注意。でも良い出会いがあるかも。" }
-        ];
-
-        // ページ読み込み時に実行
         window.onload = function() {
-            const random = Math.floor(Math.random() * results.length);
-            const selected = results[random];
+            const fortuneElement = document.getElementById('fortune');
+            const messageElement = document.getElementById('message');
             
-            document.getElementById('fortune').innerText = selected.rank;
-            document.getElementById('message').innerText = selected.msg;
+            // 1. シャッフル演出（0.1秒ごとに運勢を書き換える）
+            let count = 0;
+            const shuffle = setInterval(() => {
+                const dummy = ["大吉", "中吉", "小吉", "吉"];
+                fortuneElement.innerText = dummy[count % dummy.length];
+                count++;
+            }, 100);
+
+            // 2. 2秒後に確定させる
+            setTimeout(() => {
+                clearInterval(shuffle); // シャッフル停止
+                
+                const results = [
+                    { rank: "🌸 超大吉", msg: "履修登録が完璧に終わる予感！" },
+                    { rank: "✨ 大吉", msg: "サークル勧誘で運命の出会いがあるかも。" },
+                    { rank: "🍚 学食吉", msg: "限定メニューが食べられる幸運の持ち主。" },
+                    { rank: "📚 知吉", msg: "図書館の奥の方に、あなただけの特等席が見つかる。" }
+                ];
+
+                const selected = results[Math.floor(Math.random() * results.length)];
+                fortuneElement.innerText = selected.rank;
+                messageElement.innerText = selected.msg;
+                
+                // 決まった瞬間に少し大きくする演出
+                fortuneElement.style.transform = "scale(1.2)";
+                fortuneElement.style.transition = "0.3s";
+            }, 2000); // 2000ミリ秒（2秒）待つ
         };
     </script>
 </body>
