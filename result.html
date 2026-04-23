@@ -60,30 +60,53 @@
 
     <script>
         window.onload = function() {
-            const results = [
-                { rank: "大吉", msg: "素晴らしい！大学生活最高のスタートが切れるでしょう。" },
-                { rank: "中吉", msg: "新しい友達ができる予感。自分から挨拶してみて！" },
-                { rank: "小吉", msg: "学食でラッキーなことがあるかも。" },
-                { rank: "吉", msg: "落とし物に注意。でも素敵な先輩に出会えるかも。" }
-            ];
-
             const fortuneEl = document.getElementById('fortune');
             const messageEl = document.getElementById('message');
 
-            // 簡易的な演出
+            // おみくじの結果リスト
+            // リストの数を増やすことで、大吉の出る確率を約70%以上に設定しています
+            const results = [
+                // --- 大吉（10個） ---
+                { rank: "大吉", msg: "最高の運気です！何事も自信を持って進めば、道が開けるでしょう。" },
+                { rank: "大吉", msg: "今日出会う人はあなたに幸運をもたらします。笑顔を大切に。" },
+                { rank: "大吉", msg: "長年欲しかったものや、探していた情報が手に入るかもしれません。" },
+                { rank: "大吉", msg: "周囲への小さな気遣いが、大きな幸運となって返ってくる一日です。" },
+                { rank: "大吉", msg: "思い切って新しいことに挑戦すると、驚くほどスムーズに進みます。" },
+                { rank: "大吉", msg: "直感が冴え渡る日。自分の「ピンと来た」感覚を信じてみて。" },
+                { rank: "大吉", msg: "努力が形になる時。これまでの頑張りが報われる出来事がありそう。" },
+                { rank: "大吉", msg: "勝負運が抜群です。ジャンケンやクジで嬉しい結果が出るかも。" },
+                { rank: "大吉", msg: "今日は心穏やかに過ごせます。好きな音楽を聴いて運気アップ。" },
+                { rank: "大吉", msg: "対人運が良好。懐かしい人から連絡が来るかもしれません。" },
+
+                // --- 中吉（2個） ---
+                { rank: "中吉", msg: "一歩ずつ着実に進むことで、大きな成果につながる一日です。" },
+                { rank: "中吉", msg: "いつもと違う道を通ってみると、素敵な発見があるでしょう。" },
+
+                // --- 小吉（1個） ---
+                { rank: "小吉", msg: "身の回りの整理整頓をすると、新しい運気が舞い込みます。" },
+
+                // --- 吉（1個） ---
+                { rank: "吉", msg: "早寝早起きを心がけると吉。健康的な生活が幸運の鍵です。" }
+            ];
+
+            // --- 演出部分 ---
             let count = 0;
             const timer = setInterval(() => {
-                const ranks = ["大吉", "中吉", "小吉", "吉"];
-                fortuneEl.innerText = ranks[count % 4];
+                const dummyRanks = ["大吉", "中吉", "小吉", "吉"];
+                fortuneEl.innerText = dummyRanks[count % 4];
                 count++;
             }, 100);
 
             setTimeout(() => {
                 clearInterval(timer);
+                // ランダムに選出
                 const res = results[Math.floor(Math.random() * results.length)];
                 fortuneEl.innerText = res.rank;
                 messageEl.innerText = res.msg;
-                fortuneEl.style.transform = "scale(1.2)";
+                
+                // 結果がパッと出る演出
+                fortuneEl.style.transform = "scale(1.3)";
+                fortuneEl.style.color = "#ff4d4d"; // 大吉っぽく赤く強調
             }, 1500);
         };
     </script>
