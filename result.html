@@ -48,66 +48,101 @@
             font-weight: bold;
             box-shadow: 0 4px 10px rgba(9, 132, 227, 0.3);
         }
+                /* スロットの外枠 */
+        .slot-container {
+            height: 80px; /* 文字1つ分の高さ */
+            overflow: hidden; /* はみ出た文字を隠す */
+            border: 4px solid #d63031;
+            border-radius: 10px;
+            background: white;
+            margin: 20px auto;
+            width: 200px;
+            position: relative;
+        }
+
+        /* 縦に並ぶ文字のリール */
+        .reel {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            transition: transform 3s cubic-bezier(0.1, 0, 0.1, 1); /* 最後にゆっくり止まる動き */
+        }
+
+        .reel div {
+            height: 80px;
+            line-height: 80px;
+            font-size: 3rem;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
     <div class="card">
         <h1>あなたの運勢は…</h1>
         <div id="fortune">???</div>
-        <p id="message">読み込み中...</p>
+        <div class="slot-container">
+            <div id="slot-reel" class="reel">
+                </div>
+        </div>
+        <p id="message"></p>
         <button onclick="location.href='result.html'">もう一度引く</button>
     </div>
 
-    <script>
+            <script>
         window.onload = function() {
-            const fortuneEl = document.getElementById('fortune');
+            const reel = document.getElementById('slot-reel');
             const messageEl = document.getElementById('message');
 
-            // おみくじの結果リスト
-            // リストの数を増やすことで、大吉の出る確率を約70%以上に設定しています
+            // 1. 結果を先に決める（大吉を多めにするロジックはそのまま）
             const results = [
                 // --- 大吉（10個） ---
-                { rank: "大吉", msg: "最高の運気です！何事も自信を持って進めば、道が開けるでしょう。" },
-                { rank: "大吉", msg: "今日出会う人はあなたに幸運をもたらします。笑顔を大切に。" },
-                { rank: "大吉", msg: "長年欲しかったものや、探していた情報が手に入るかもしれません。" },
-                { rank: "大吉", msg: "周囲への小さな気遣いが、大きな幸運となって返ってくる一日です。" },
-                { rank: "大吉", msg: "思い切って新しいことに挑戦すると、驚くほどスムーズに進みます。" },
-                { rank: "大吉", msg: "直感が冴え渡る日。自分の「ピンと来た」感覚を信じてみて。" },
-                { rank: "大吉", msg: "努力が形になる時。これまでの頑張りが報われる出来事がありそう。" },
-                { rank: "大吉", msg: "勝負運が抜群です。ジャンケンやクジで嬉しい結果が出るかも。" },
-                { rank: "大吉", msg: "今日は心穏やかに過ごせます。好きな音楽を聴いて運気アップ。" },
-                { rank: "大吉", msg: "対人運が良好。懐かしい人から連絡が来るかもしれません。" },
+                    { rank: "大吉", msg: "最高の運気です！何事も自信を持って進めば、道が開けるでしょう。" },
+                    { rank: "大吉", msg: "今日出会う人はあなたに幸運をもたらします。笑顔を大切に。" },
+                    { rank: "大吉", msg: "長年欲しかったものや、探していた情報が手に入るかもしれません。" },
+                    { rank: "大吉", msg: "周囲への小さな気遣いが、大きな幸運となって返ってくる一日です。" },
+                    { rank: "大吉", msg: "思い切って新しいことに挑戦すると、驚くほどスムーズに進みます。" },
+                    { rank: "大吉", msg: "直感が冴え渡る日。自分の「ピンと来た」感覚を信じてみて。" },
+                    { rank: "大吉", msg: "努力が形になる時。これまでの頑張りが報われる出来事がありそう。" },
+                    { rank: "大吉", msg: "勝負運が抜群です。ジャンケンやクジで嬉しい結果が出るかも。" },
+                    { rank: "大吉", msg: "今日は心穏やかに過ごせます。好きな音楽を聴いて運気アップ。" },
+                    { rank: "大吉", msg: "対人運が良好。懐かしい人から連絡が来るかもしれません。" },
 
-                // --- 中吉（2個） ---
-                { rank: "中吉", msg: "一歩ずつ着実に進むことで、大きな成果につながる一日です。" },
-                { rank: "中吉", msg: "いつもと違う道を通ってみると、素敵な発見があるでしょう。" },
+                    // --- 中吉（2個） ---
+                    { rank: "中吉", msg: "一歩ずつ着実に進むことで、大きな成果につながる一日です。" },
+                    { rank: "中吉", msg: "いつもと違う道を通ってみると、素敵な発見があるでしょう。" },
 
-                // --- 小吉（1個） ---
-                { rank: "小吉", msg: "身の回りの整理整頓をすると、新しい運気が舞い込みます。" },
+                    // --- 小吉（1個） ---
+                    { rank: "小吉", msg: "身の回りの整理整頓をすると、新しい運気が舞い込みます。" },
 
-                // --- 吉（1個） ---
-                { rank: "吉", msg: "早寝早起きを心がけると吉。健康的な生活が幸運の鍵です。" }
+                    // --- 吉（1個） ---
+                    { rank: "吉", msg: "早寝早起きを心がけると吉。健康的な生活が幸運の鍵です。" }
             ];
+            const selected = results[Math.floor(Math.random() * results.length)];
 
-            // --- 演出部分 ---
-            let count = 0;
-            const timer = setInterval(() => {
-                const dummyRanks = ["大吉", "中吉", "小吉", "吉"];
-                fortuneEl.innerText = dummyRanks[count % 4];
-                count++;
+            // 2. スロットのリールにダミーの文字をたくさん入れる
+            const dummyRanks = ["大吉", "中吉", "小吉", "吉", "末吉"];
+            for (let i = 0; i < 20; i++) {
+                const div = document.createElement('div');
+                // 最後（20番目）だけ本物の結果にする
+                div.innerText = (i === 19) ? selected.rank : dummyRanks[i % dummyRanks.length];
+                reel.appendChild(div);
+            }
+
+            // 3. アニメーション開始
+            // 0.1秒後にリールを一番下まで一気に移動させる
+            setTimeout(() => {
+                const rowHeight = 80;
+                const totalRows = 20;
+                const moveY = (totalRows - 1) * rowHeight;
+                
+                reel.style.transform = `translateY(-${moveY}px)`;
             }, 100);
 
+            // 4. 止まったタイミング（3秒後）でメッセージを出す
             setTimeout(() => {
-                clearInterval(timer);
-                // ランダムに選出
-                const res = results[Math.floor(Math.random() * results.length)];
-                fortuneEl.innerText = res.rank;
-                messageEl.innerText = res.msg;
-                
-                // 結果がパッと出る演出
-                fortuneEl.style.transform = "scale(1.3)";
-                fortuneEl.style.color = "#ff4d4d"; // 大吉っぽく赤く強調
-            }, 1500);
+                messageEl.innerText = selected.msg;
+                messageEl.style.opacity = "1";
+            }, 3200);
         };
     </script>
 </body>
